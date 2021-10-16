@@ -1,0 +1,54 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-sm-8">
+      <form #postForm="ngForm" (ngSubmit)="onCreatePost(postForm.value)">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" id="title" name="title" ngModel #title="ngModel">
+        </div>
+        <div class="form-group">
+          <label for="content">Content</label>
+          <textarea class="form-control" id="content" name="content" ngModel #content="ngModel"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Post</button>
+      </form>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-sm-12">
+      <button class="btn btn-success" (click)="getPosts()">
+        Load Posts
+      </button>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-sm-12">
+      <div class="jumbotron text-center" *ngIf="loadedPost.length == 0">
+        <h3>
+          No data Available
+        </h3>
+      </div>
+      <ul class="list-group" *ngIf="loadedPost.length > 0">
+        <li class="list-group-item" *ngFor="let post of loadedPost; let i = index">
+          <div class="row">
+            <div class="col-sm-9">
+              <h3>
+                {{post.title}}
+              </h3>
+              <p>
+                {{post.content}}
+              </p>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-danger mr-3" (click)="onDeletePost(post)">Delete</button>
+                <button class="btn btn-primary">Edit</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="loader" *ngIf="loaderFlag">
+  <img src="../assets/images/loader.gif" alt="">
+</div>
