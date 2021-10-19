@@ -23,7 +23,7 @@
   </div>
   <div class="row mt-4">
     <div class="col-sm-12">
-      <div class="jumbotron text-center" *ngIf="loadedPost.length == 0">
+      <div class="jumbotron text-center" *ngIf="loadedPost.length == 0 && !errorFlag">
         <h3>
           No data Available
         </h3>
@@ -40,15 +40,53 @@
               </p>
             </div>
             <div class="col-sm-3">
-                <button class="btn btn-danger mr-3" (click)="onDeletePost(post)">Delete</button>
-                <button class="btn btn-primary">Edit</button>
+              <button class="btn btn-danger mr-3" (click)="onDeletePost(post)">Delete</button>
+              <button class="btn btn-primary">Edit</button>
             </div>
           </div>
         </li>
       </ul>
     </div>
   </div>
+  <div class="loader" *ngIf="loaderFlag">
+    <img src="../assets/images/loader.gif" alt="">
+  </div>
+  <div class="row" *ngIf="errorFlag">
+    <div class="col-sm-12">
+      <div class="errorMsg alert alert-danger">
+        <p>
+        {{errorMsg}}
+        </p>
+        <button class="btn btn-danger" (click)="onErrorHandler()">Ok</button>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="loader" *ngIf="loaderFlag">
-  <img src="../assets/images/loader.gif" alt="">
+
+<div class="container" *ngIf="false">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Async Pipe</h2>
+    </div>
+    <div class="col-sm-12">
+      <ul class="list-group" *ngIf="loadedPost$">
+        <li class="list-group-item" *ngFor="let post of loadedPost$ | async; let i = index">
+          <div class="row">
+            <div class="col-sm-9">
+              <h3>
+                {{post.title}}
+              </h3>
+              <p>
+                {{post.content}}
+              </p>
+            </div>
+            <div class="col-sm-3">
+              <button class="btn btn-danger mr-3" (click)="onDeletePost(post)">Delete</button>
+              <button class="btn btn-primary">Edit</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
